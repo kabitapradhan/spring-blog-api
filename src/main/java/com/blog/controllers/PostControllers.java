@@ -20,6 +20,7 @@ import com.blog.payload.Post3Dto;
 import com.blog.payload.PostDto;
 import com.blog.payload.PostResponse;
 import com.blog.services.PostService;
+import com.fasterxml.jackson.annotation.JacksonInject.Value;
 
 
 @RestController
@@ -38,9 +39,11 @@ public class PostControllers {
 	@GetMapping("/")
 	public ResponseEntity<PostResponse> getAllPostList(
 			@RequestParam(value="pageNumber" , defaultValue = "0" , required = false)Integer pageNumber,
-			@RequestParam(value="pageSize" , defaultValue = "10" , required = false) Integer pageSize
+			@RequestParam(value="pageSize" , defaultValue = "10" , required = false) Integer pageSize ,
+			@RequestParam(value = "sortBy" , defaultValue = "title" , required = false) String sortBy,
+			@RequestParam(value = "sortDir" ,defaultValue = "asc" ,required = false ) String sortDir
 			){
-		PostResponse obj = this.service.getAllPost(pageNumber , pageSize);
+		PostResponse obj = this.service.getAllPost(pageNumber , pageSize , sortBy , sortDir);
 		return new ResponseEntity<>(obj,HttpStatus.OK);
 	}
 	@GetMapping("/user/{userId}")

@@ -12,7 +12,7 @@ public interface PostService {
 	//add
 	public PostDto createPostByUser(PostDto dto , int userId , int categoryId);
 	// gett all
-	public PostResponse getAllPost(int pageNumber , int pageSize);
+	public PostResponse getAllPost(int pageNumber , int pageSize , String sortBy , String sortDir);
 	// get one
 	public PostDto getPostById(Integer id);
 	public List<Post2Dto> getPostByUser(Integer userId);
