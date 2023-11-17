@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,53 +14,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.payload.ApiResponse;
-import com.blog.payload.UserDto;
-import com.blog.services.UserService;
+import com.blog.payload.CategoryDto;
+import com.blog.services.CategoryService;
 
-import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/api/user")
-public class UserController {
+@RequestMapping("/api/v2/category")
+public class CategoryController {
 	
 	@Autowired
-	private UserService service;
+	private CategoryService service;
 	
 	@PostMapping("/")
-	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto dto) {
-		UserDto user = this.service.createUser(dto);
+	public ResponseEntity<CategoryDto> createUser(@RequestBody CategoryDto dto) {
+		CategoryDto user = this.service.createCategory(dto);
 		return new ResponseEntity<>(user, HttpStatus.CREATED);
 	}
 	@GetMapping("/")
-	public ResponseEntity<List<UserDto>> getAllUserList(){
-		List<UserDto> list = this.service.getAllUser();
+	public ResponseEntity<List<CategoryDto>> getAllUserList(){
+		List<CategoryDto> list = this.service.getAllCategory();
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<UserDto> getUserById(@PathVariable int id){
+	public ResponseEntity<CategoryDto> getUserById(@PathVariable int id){
 		
-		UserDto dto = this.service.getUserById(id);
+		CategoryDto dto = this.service.getCategoryById(id);
 		return new ResponseEntity<>(dto ,HttpStatus.FOUND);
 		
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable int id){
-		this.service.deleteUserById(id);
-		ApiResponse res = new ApiResponse("Delete User data Succesfull", true);
+		this.service.deleteCategory(id);
+		ApiResponse res = new ApiResponse("Delete Category data Succesfull", true);
 		return new ResponseEntity<>(res , HttpStatus.OK);
-	}
-	@PostMapping("/{id}")
-	public ResponseEntity<UserDto> updateUser(@PathVariable int id , @RequestBody UserDto dto){
-		UserDto dto2 = this.service.updateUserById(id, dto);
-		return ResponseEntity.ok(dto2);
-		
 	}
 
 }
-
-
-
-
-
-
-

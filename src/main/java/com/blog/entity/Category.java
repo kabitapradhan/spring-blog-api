@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,21 +18,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="users")
+@Table(name="categories")
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Category {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	private String name;
-	private String email;
-	private String about;
-	private String password;
+	private Integer categoryId;
+	@Column(name="title")
+	private String categoryTitle;
+	@Column(name="description")
+	private String categoryDesc;
 	
-	@OneToMany(mappedBy = "user" , cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "category" ,cascade = CascadeType.ALL , fetch = FetchType.LAZY)
 	private List<Post> post = new ArrayList<>();
 
 }

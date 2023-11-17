@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto getUserById(int id) {
 		User user = this.userRepo.findById(id)
-		.orElseThrow(()-> new ResourceNotFoundException("User Database" , "user id" , id) );
+		.orElseThrow(()-> new ResourceNotFoundException("User" , "id" , id) );
 		return this.mapper.map(user, UserDto.class);
 	}
 
@@ -48,18 +48,20 @@ public class UserServiceImpl implements UserService {
 	public UserDto updateUserById(int id, UserDto dto) {
 		User user = this.userRepo
 				.findById(id)
-				.orElseThrow(()->  new ResourceNotFoundException("User Database" , "user id" , id) );
+				.orElseThrow(()->  new ResourceNotFoundException("User" , "id" , id) );
 		user.setAbout(dto.getAbout());
 		user.setName(dto.getName());
 		user.setPassword(dto.getPassword());
+		System.out.println(user);
 		User save = this.userRepo.save(user);
+		System.out.println(save);
 		return this.mapper.map(save, UserDto.class);
 	}
 
 	@Override
 	public void deleteUserById(int id) {
 		User user = this.userRepo.findById(id)
-				.orElseThrow(()->  new ResourceNotFoundException("User Database" , "user id" , id) );
+				.orElseThrow(()->  new ResourceNotFoundException("User" , "id" , id) );
 		this.userRepo.delete(user);
 		
 	}
